@@ -31,6 +31,7 @@ import io.trino.spi.type.CharType;
 import io.trino.spi.type.DecimalType;
 import io.trino.spi.type.Type;
 import io.trino.spi.type.TypeSignatureParameter;
+import io.trino.spi.type.UuidType;
 import io.trino.spi.type.VarbinaryType;
 import io.trino.spi.type.VarcharType;
 import org.bson.Document;
@@ -250,6 +251,9 @@ public class MongoPageSource
         else if (type.equals(OBJECT_ID)) {
             type.writeSlice(output, wrappedBuffer(((ObjectId) value).toByteArray()));
         }
+        else if (UuidType.UUID.equals(type)) {
+            type.writeSlice(output, wrappedBuffer(((Binary) value).getData()));
+        }
         else if (type instanceof VarbinaryType) {
             if (value instanceof Binary) {
                 type.writeSlice(output, wrappedBuffer(((Binary) value).getData()));
@@ -265,7 +269,7 @@ public class MongoPageSource
             type.writeSlice(output, jsonParse(utf8Slice(toVarcharValue(value))));
         }
         else {
-            throw new TrinoException(GENERIC_INTERNAL_ERROR, "Unhandled type for Slice: " + type.getTypeSignature());
+            throw new TrinoException(GENERIC_INTERNAL_ERROR, "Unhandled type for Slice test: " + type.getTypeSignature());
         }
     }
 
