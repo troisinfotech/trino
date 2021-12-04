@@ -269,7 +269,7 @@ public class MongoPageSource
             type.writeSlice(output, jsonParse(utf8Slice(toVarcharValue(value))));
         }
         else {
-            throw new TrinoException(GENERIC_INTERNAL_ERROR, "Unhandled type for Slice test: " + type.getTypeSignature());
+            throw new TrinoException(GENERIC_INTERNAL_ERROR, "Unhandled type for Slice: " + type.getTypeSignature());
         }
     }
 
